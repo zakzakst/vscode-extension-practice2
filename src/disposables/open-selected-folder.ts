@@ -1,17 +1,38 @@
-import type { MyRepositoriesList } from "@/types/my-repository";
+import type { MyRepositoriesList, MyRepository } from "@/types/my-repository";
 import * as vscode from "vscode";
 
 export const openSelectedFolderDisposable = vscode.commands.registerCommand(
   "my-repositories.open-selected-folder",
-  (name: string) => {
+  async () => {
     const config = vscode.workspace.getConfiguration("my-repositories");
-    const list = config.get<MyRepositoriesList[]>("list", []);
-    if (!list || !list.length) {
+    const lists = config.get<MyRepositoriesList[]>("lists", []);
+    if (!lists || !lists.length) {
       vscode.window.showInformationMessage(
         "設定ファイルで値を設定してください",
       );
-    } else {
-      vscode.window.showInformationMessage(name);
+      return;
     }
+    const allRepositories: MyRepository[] = lists.reduce(
+      (acc: MyRepository[], list) => {
+        return [...acc, ...list.repositories];
+      },
+      [],
+    );
+    const allRepositoryNames = allRepositories.map(
+      (repository) => repository.name,
+    );
+    const selectedRepositoryName =
+      await vscode.window.showQuickPick(allRepositoryNames);
+    if (!selectedRepositoryName) {
+      return;
+    }
+    const targetRepository = allRepositories.find(
+      (repository) => repository.name === selectedRepositoryName,
+    )!!;
+    await vscode.commands.executeCommand(
+      "vscode.openFolder",
+      vscode.Uri.file(targetRepository.localFolder),
+      true,
+    );
   },
 );

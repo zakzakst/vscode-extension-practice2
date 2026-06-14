@@ -38,8 +38,8 @@ export class MyRepositoriesViewProvider implements vscode.TreeDataProvider<
     if (!element) {
       // 初回は設定ファイルから取得
       const config = vscode.workspace.getConfiguration("my-repositories");
-      const list = config.get<MyRepositoriesList[]>("list", []);
-      return list;
+      const lists = config.get<MyRepositoriesList[]>("lists", []);
+      return lists;
     }
 
     const isList = "repositories" in element;

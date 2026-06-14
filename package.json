@@ -38,7 +38,7 @@
     "configuration": {
       "title": "マイリポジトリ リスト",
       "properties": {
-        "my-repositories.list": {
+        "my-repositories.lists": {
           "type": "array",
           "default": [],
           "description": "リポジトリのローカルフォルダのパスとページURLのデータ"
