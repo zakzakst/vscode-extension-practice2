@@ -16,9 +16,23 @@
     "commands": [
       {
         "command": "my-repositories.sample",
-        "title": "Sample"
+        "title": "コマンドサンプル"
+      },
+      {
+        "command": "my-repositories.context-sample",
+        "title": "右クリック コマンドサンプル"
       }
     ],
+    "configuration": {
+      "title": "サンプル",
+      "properties": {
+        "my-repositories.sample": {
+          "type": "string",
+          "default": "",
+          "description": "サンプルテキスト"
+        }
+      }
+    },
     "viewsContainers": {
       "activitybar": [
         {
@@ -34,6 +48,18 @@
           "id": "sampleView",
           "name": "サンプル",
           "icon": "media/icon-sample.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "my-repositories.sample",
+          "when": "viewItem == context-sample"
+        },
+        {
+          "command": "my-repositories.context-sample",
+          "when": "viewItem == context-sample"
         }
       ]
     }
