@@ -15,38 +15,50 @@
   "contributes": {
     "commands": [
       {
-        "command": "my-repositories.sample",
-        "title": "コマンドサンプル"
+        "command": "my-repositories.open-folder",
+        "title": "フォルダを開く"
       },
       {
-        "command": "my-repositories.context-sample",
-        "title": "右クリック コマンドサンプル"
+        "command": "my-repositories.open-selected-folder",
+        "title": "my-repositories: 選択したフォルダを開く"
+      },
+      {
+        "command": "my-repositories.open-new-folder",
+        "title": "フォルダを新規ウインドウで開く"
+      },
+      {
+        "command": "my-repositories.show-repository-page",
+        "title": "リポジトリページを表示"
+      },
+      {
+        "command": "my-repositories.show-current-repository-page",
+        "title": "my-repositories: 現在のリポジトリページを表示"
       }
     ],
     "configuration": {
-      "title": "サンプル",
+      "title": "マイリポジトリ リスト",
       "properties": {
-        "my-repositories.sample": {
-          "type": "string",
-          "default": "",
-          "description": "サンプルテキスト"
+        "my-repositories.lists": {
+          "type": "array",
+          "default": [],
+          "description": "リポジトリのローカルフォルダのパスとページURLのデータ"
         }
       }
     },
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "sample",
-          "title": "サンプル",
+          "id": "my-repositories",
+          "title": "マイリポジトリ",
           "icon": "media/icon-sample.svg"
         }
       ]
     },
     "views": {
-      "sample": [
+      "my-repositories": [
         {
-          "id": "sampleView",
-          "name": "サンプル",
+          "id": "my-repositories-view",
+          "name": "マイリポジトリ",
           "icon": "media/icon-sample.svg"
         }
       ]
@@ -54,12 +66,16 @@
     "menus": {
       "view/item/context": [
         {
-          "command": "my-repositories.sample",
-          "when": "viewItem == context-sample"
+          "command": "my-repositories.open-folder",
+          "when": "viewItem == context-menu"
         },
         {
-          "command": "my-repositories.context-sample",
-          "when": "viewItem == context-sample"
+          "command": "my-repositories.open-new-folder",
+          "when": "viewItem == context-menu"
+        },
+        {
+          "command": "my-repositories.show-repository-page",
+          "when": "viewItem == context-menu"
         }
       ]
     }
