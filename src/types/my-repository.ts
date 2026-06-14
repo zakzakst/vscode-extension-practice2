@@ -7,4 +7,4 @@ export type MyRepository = {
 export type MyRepositoriesList = {
   name: string;
   repositories: MyRepository[];
-}[];
+};
