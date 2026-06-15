@@ -7,13 +7,15 @@ export class MyRepositoriesViewProvider implements vscode.TreeDataProvider<
   getTreeItem(
     element: MyRepository | MyRepositoriesList,
   ): vscode.TreeItem | Thenable<vscode.TreeItem> {
+    const config = vscode.workspace.getConfiguration("my-repositories");
+    const listExpand = config.get<boolean>("list-expand", true);
     const isList = "repositories" in element;
     if (isList) {
       // リストデータの場合
-      const item = new vscode.TreeItem(
-        element.name,
-        vscode.TreeItemCollapsibleState.Expanded,
-      );
+      const collapsibleState = listExpand
+        ? vscode.TreeItemCollapsibleState.Expanded
+        : vscode.TreeItemCollapsibleState.Collapsed;
+      const item = new vscode.TreeItem(element.name, collapsibleState);
       item.iconPath = new vscode.ThemeIcon("folder");
       return item;
     } else {
