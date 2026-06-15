@@ -1,6 +1,11 @@
 import type { MyRepositoriesList, MyRepository } from "@/types/my-repository";
 import * as vscode from "vscode";
 
+const formatPath = (path: string): string => {
+  const result = path.replace(/^.*?:/, "").replace(/\\/g, "");
+  return result;
+};
+
 export class MyRepositoriesViewProvider implements vscode.TreeDataProvider<
   MyRepository | MyRepositoriesList
 > {
@@ -20,8 +25,14 @@ export class MyRepositoriesViewProvider implements vscode.TreeDataProvider<
       return item;
     } else {
       // リポジトリデータの場合
+      const workspaceFolders = vscode.workspace.workspaceFolders ?? [];
+      const isCurrent = workspaceFolders.some(
+        // NOTE: VS Codeの設定値とworkspaceFoldersで取得する文字列の表示方法の差分をなくしてから比較する
+        (f) => formatPath(f.uri.fsPath) === formatPath(element.localFolder),
+      );
+      const label = isCurrent ? `【*】${element.name}` : element.name;
       const item = new vscode.TreeItem(
-        element.name,
+        label,
         vscode.TreeItemCollapsibleState.None,
       );
       item.command = {
