@@ -42,6 +42,11 @@
           "type": "array",
           "default": [],
           "description": "リポジトリのローカルフォルダのパスとページURLのデータ"
+        },
+        "my-repositories.list-expand": {
+          "type": "boolean",
+          "default": true,
+          "description": "リスト表示時にツリーを展開する"
         }
       }
     },
